@@ -25,37 +25,31 @@ beforeEach(() => {
   originalTodos = [
     {
       text: 'Christmas shopping',
-      date: new Date(),
       complete: false,
       priority: 1,
     },
     {
       text: `make doctor's appointment`,
-      date: new Date(),
       complete: true,
       priority: 2,
     },
     {
       text: 'binge watch The Office',
-      date: new Date(),
       complete: false,
       priority: 2,
     },
     {
       text: 'research dinosaurs',
-      date: new Date(),
       complete: false,
       priority: 1,
     },
     {
       text: 'fire Colin',
-      date: new Date(),
       complete: true,
       priority: 2,
     },
     {
       text: 'start novel',
-      date: new Date(),
       complete: true,
       priority: 1,
     },
@@ -122,8 +116,8 @@ describe('filter', () => {
 
 describe('twoPileSort', () => {
   it(`returns a new array where elements from the given function that pass the given testing function are put at the beginning, while those who don't are put at the end`, () => {
-    const greetings = ['hi', 'how are you', 'hello'];
-    const fish = ['whale', 'dogfish'];
+    const greetings = ['hi', 'how are you', 'hello', 'you are looking well today'];
+    const fish = ['whale', 'dogfish', 'starfish', 'manta ray', 'here fishy fishy fishy'];
 
     const isShort = function(greeting) {
       return greeting.length < 6;
@@ -133,8 +127,23 @@ describe('twoPileSort', () => {
       return fish.includes('fish')
     }
 
-    expect(twoPileSort(greetings, isShort)).toEqual(['hi', 'hello', 'how are you'])
-    expect(twoPileSort(fish, hasFishInName)).toEqual(['dogfish', 'whale'])
+    const shortGreetingsFirst = twoPileSort(greetings, isShort);
+    const firstLongGreetingIndex = shortGreetingsFirst.findIndex((greeting) => greeting.length >= 6)
+
+    const foundShortGreetingAfter = shortGreetingsFirst.slice(firstLongGreetingIndex)
+      .some((greeting) => greeting.length < 6)
+
+    expect(firstLongGreetingIndex).toBe(2);
+    expect(foundShortGreetingAfter).toBe(false);
+
+    const fishyFishFirst = twoPileSort(fish, hasFishInName);
+    const firstUnfishyFishIndex = fishyFishFirst.findIndex((fish) => !fish.includes('fish'))
+
+    const foundFishyFishAfter = fishyFishFirst.slice(firstUnfishyFishIndex)
+      .some((fish) => fish.includes('fish'))
+
+    expect(firstUnfishyFishIndex).toBe(3);
+    expect(foundFishyFishAfter).toBe(false);
   })
 
   it(`doesn't modify the original array`, () => {
@@ -153,14 +162,14 @@ describe('getTodoName', () => {
   it(`returns the text property of a todo`, () => {
     const todo1 = {
     text: 'Christmas shopping',
-    date: new Date(),
+    
     complete: false,
     priority: 1,
   };
 
   const todo2 = {
     text: `make doctor's appointment`,
-    date: new Date(),
+    
     complete: false,
     priority: 2,
   };
@@ -174,14 +183,14 @@ describe('getCompleteness', () => {
   it(`returns the completeness of a todo`, () => {
     const todo1 = {
     text: 'Christmas shopping',
-    date: new Date(),
+    
     complete: false,
     priority: 1,
   };
 
   const todo2 = {
     text: `make doctor's appointment`,
-    date: new Date(),
+    
     complete: true,
     priority: 2,
   };
@@ -195,14 +204,14 @@ describe('getPriority', () => {
   it(`returns the priority of a todo`, () => {
     const todo1 = {
     text: 'Christmas shopping',
-    date: new Date(),
+    
     complete: false,
     priority: 1,
   };
 
   const todo2 = {
     text: `make doctor's appointment`,
-    date: new Date(),
+    
     complete: true,
     priority: 2,
   };
@@ -216,14 +225,14 @@ describe('isComplete', () => {
   it(`returns whether the given todo is complete`, () => {
     const todo1 = {
     text: 'Christmas shopping',
-    date: new Date(),
+    
     complete: false,
     priority: 1,
   };
 
   const todo2 = {
     text: `make doctor's appointment`,
-    date: new Date(),
+    
     complete: true,
     priority: 2,
   };
@@ -237,14 +246,14 @@ describe('isHighPriority', () => {
   it(`returns whether the given todo is of high priority`, () => {
     const todo1 = {
     text: 'Christmas shopping',
-    date: new Date(),
+    
     complete: false,
     priority: 2,
   };
 
   const todo2 = {
     text: `make doctor's appointment`,
-    date: new Date(),
+    
     complete: true,
     priority: 1,
   };
@@ -256,7 +265,7 @@ describe('isHighPriority', () => {
 
 describe('names', () => {
   it(`returns an array of the given todos names`, () => {
-    expect(names(todos)).toBe([
+    expect(names(todos)).toEqual([
       'Christmas shopping',
       `make doctor's appointment`,
       'binge watch The Office',
@@ -274,7 +283,7 @@ describe('names', () => {
 
 describe('namesAndPriorities', () => {
   it(`returns an array of the string containing the given todos name and priority`, () => {
-    expect(namesAndPriorities(todos)).toBe([
+    expect(namesAndPriorities(todos)).toEqual([
       'Christmas shopping - Low',
       `make doctor's appointment - High`,
       'binge watch The Office - High',
@@ -295,19 +304,19 @@ describe('justNotComplete', () => {
     const notComplete = [
       {
         text: 'Christmas shopping',
-        date: new Date(),
+        
         complete: false,
         priority: 1,
       },
       {
         text: 'binge watch The Office',
-        date: new Date(),
+        
         complete: false,
         priority: 2,
       },
       {
         text: 'research dinosaurs',
-        date: new Date(),
+        
         complete: false,
         priority: 1,
       },
@@ -327,19 +336,19 @@ describe('justComplete', () => {
     const complete = [
       {
         text: `make doctor's appointment`,
-        date: new Date(),
+        
         complete: true,
         priority: 2,
       },
       {
         text: 'fire Colin',
-        date: new Date(),
+        
         complete: true,
         priority: 2,
       },
       {
         text: 'start novel',
-        date: new Date(),
+        
         complete: true,
         priority: 1,
       },
@@ -359,19 +368,19 @@ describe('priority2Only', () => {
     const highPriority = [
       {
         text: `make doctor's appointment`,
-        date: new Date(),
+        
         complete: true,
         priority: 2,
       },
       {
         text: 'binge watch The Office',
-        date: new Date(),
+        
         complete: false,
         priority: 2,
       },
       {
         text: 'fire Colin',
-        date: new Date(),
+        
         complete: true,
         priority: 2,
       },
@@ -391,19 +400,19 @@ describe('priority1Only', () => {
     const lowPriority = [
       {
         text: 'Christmas shopping',
-        date: new Date(),
+        
         complete: false,
         priority: 1,
       },
       {
         text: 'research dinosaurs',
-        date: new Date(),
+        
         complete: false,
         priority: 1,
       },
       {
         text: 'start novel',
-        date: new Date(),
+        
         complete: true,
         priority: 1,
       },
