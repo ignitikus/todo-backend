@@ -46,25 +46,15 @@ const twoPileSort = function(arr, func) {
  * HELPER FUNCTIONS *
  ********************/
 
-const getTodoName = function(obj) {
-  return obj.text
-}
+const getTodoName = obj => obj.text
 
-const getCompleteness = function (obj) {
-  return obj.complete
-}
+const getCompleteness = obj => obj.complete
 
-const getPriority = function (obj) {
-  return obj.priority
-}
+const getPriority = obj => obj.priority
 
-const isComplete = function(obj) {
-  return obj.complete
-}
+const isComplete = obj => obj.complete
 
-const isHighPriority = function(obj) {
-  return obj.priority===2 ? true:false 
-}
+const isHighPriority = obj => obj.priority===2 ? true:false 
 
 
 
