@@ -84,9 +84,9 @@ const priority2Only = arr => arr.filter(entry => entry.priority === 2)
 
 const priority1Only = arr => arr.filter(entry => entry.priority === 1) 
 
-const notCompleteFirst = arr => twoPileSort(arr, (entry)=> !entry.complete)
+const notCompleteFirst = arr => arr.slice().sort((a,b)=> a.complete - b.complete)
 
-const priority2First = arr => twoPileSort(arr, (entry)=> entry.priority===2)
+const priority2First = arr => arr.slice().sort((a,b)=> b.priority - a.priority)
 
 
 
