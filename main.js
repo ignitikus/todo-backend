@@ -72,45 +72,21 @@ const isHighPriority = function(obj) {
  * ITERATION FUNCTIONS *
  ***********************/
 
-const names = function(arr) {
-  return map(arr, getTodoName)
-}
+const names = arr => arr.map(obj => obj.text)
 
-const namesAndPriorities = function(arr) {
-  const newArr = []
-  arr.forEach((entry)=> {
-    if(getPriority(entry)===1){
-      newArr.push(`${entry.text} - Low`)
-    } else {
-      newArr.push(`${entry.text} - High`)
-    }
-  })
-  return newArr 
-}
+const namesAndPriorities = arr => arr.map(obj => obj.priority === 1? `${obj.text} - Low` : `${obj.text} - High` ) 
 
-const justNotComplete = function(arr) {
-  return filter(arr, (entry)=>{if(!isComplete(entry)){return entry}})
-}
+const justNotComplete = arr => arr.filter(entry => !entry.complete)
 
-const justComplete = function(arr) {
-  return filter(arr, (entry)=>{if(isComplete(entry)){return entry}})
-}
+const justComplete = arr => arr.filter(entry => entry.complete)
 
-const priority2Only = function(arr) {
-  return filter(arr, (entry)=>{if(getPriority(entry)===2){return entry}})
-}
+const priority2Only = arr => arr.filter(entry => entry.priority === 2) 
 
-const priority1Only = function(arr) {
-  return filter(arr, (entry)=>{if(getPriority(entry)===1){return entry}})
-}
+const priority1Only = arr => arr.filter(entry => entry.priority === 1) 
 
-const notCompleteFirst = function(arr) {
-  return justNotComplete(arr).concat(justComplete(arr))
-}
+const notCompleteFirst = arr => twoPileSort(arr, (entry)=> !entry.complete)
 
-const priority2First = function(arr) {
-  return twoPileSort(arr, isHighPriority)
-}
+const priority2First = arr => twoPileSort(arr, (entry)=> entry.priority===2)
 
 
 
